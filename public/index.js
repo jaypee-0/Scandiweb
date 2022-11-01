@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from "react-router-dom";
 
 import './Styles/index.css';
-import App from './App';
+import App from '../src/App';
 
 if (localStorage.getItem('ScandiwebCart') === null) {
   localStorage.setItem('ScandiwebCart', JSON.stringify([]))
