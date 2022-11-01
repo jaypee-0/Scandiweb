@@ -18,7 +18,7 @@ if (localStorage.getItem('currency') === null) {
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
 
-  <BrowserRouter basename="/category">
+  <BrowserRouter>
     <App />
   </BrowserRouter>
 
