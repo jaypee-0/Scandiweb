@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import styled from 'styled-components';
 import {
     Button,
     ButtonWrapper,
@@ -18,11 +17,8 @@ import {
     Text,
     TotalContainer,
     TotalWrapper,
-    ImgContainer,
     ImgWrapper
 } from "../Styles/CartPageStyles";
-import LeftArrow from "../Assets/interface/left-arrow.png"
-import RightArrow from "../Assets/interface/right-arrow.png"
 
 export default class CartPage extends Component {
     constructor(props) {
