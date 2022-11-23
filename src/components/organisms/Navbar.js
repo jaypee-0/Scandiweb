@@ -69,6 +69,8 @@ export default class Navbar extends Component {
 
                                 ))}
 
+                            <div>
+
                             <Select active={activeCurrency} onClick={currencyfunction}>
                                 {
                                     currencyItems.map((item, index) => (
@@ -78,14 +80,21 @@ export default class Navbar extends Component {
                                     ))}
                             </Select>
 
+                                            </div>
 
                         </SelectContainer>
-
+                        
+                        
+                            
                         <Img src={dropdown} width="9px" height='6px' marginLeft="-15px" marginRight="30px" active={activeCurrency} />
+                      
 
                         <CartIcon onClick={toggleOverlay} >
                             <Img src={shoppingCart} width='20px' height='20px' alt='shopping cart' />
+                            {
+                                cart.length > 0 &&
                             <CartItems>{cart.length > 0 ? cart.length : 0}</CartItems>
+                            }
                         </CartIcon>
                     </Div>
                 </NavBarContainer>

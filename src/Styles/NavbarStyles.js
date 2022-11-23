@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const Nav = styled.nav`
 padding: 0px 101px 0px 117px;
 @media (max-width: 1024px) {
-    padding: 0px 10px;
+    padding: 0px 10px;z
   }
 `
 export const NavBarContainer = styled.nav`

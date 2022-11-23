@@ -196,6 +196,7 @@ export class SingleProduct extends Component {
                                 (<AddToCartBtn cursor onClick={() => this.props.updateCart(today.getTime(), product.name, product.brand, product.gallery, product.prices, this.state.selectedOption1, this.state.selectedOption2, this.state.selectedOption3, product.attributes, this.state.amount, this.state.imageNumber)}>Add to Cart</AddToCartBtn>)
                         }
 
+                        {/* <Text padding="56px 0 0 0" fontSize='16px' lineHeight="160%" fontWeight="400" dangerouslySetInnerHTML={{ __html: product.description }} /> */}
                         <Text padding="56px 0 0 0" fontSize='16px' lineHeight="160%" fontWeight="400" dangerouslySetInnerHTML={{ __html: product.description }} />
                     </DivThree>
 

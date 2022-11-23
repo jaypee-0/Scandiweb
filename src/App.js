@@ -29,7 +29,7 @@ class App extends Component {
     window.scrollTo(0, 0)
   }
   handleCurrency = (index) => {
-    this.setState({ activeCurrency: true })
+    this.setState({ activeCurrency: !this.state.activeCurrency })
     this.activeCurrency(index)
   }
 
@@ -68,6 +68,7 @@ class App extends Component {
   }
   currencyfunction = () => {
     this.setState({ activeCurrency: false })
+    console.log("dd")
   }
   toggleOverlay = () => {
     this.setState({ cartOverlay: !this.state.cartOverlay })
