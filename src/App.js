@@ -19,45 +19,11 @@ class App extends Component {
     };
   }
 
-  
-  componentDidMount() {
-    const activeCurrency = (no) => {
-    if (this.state.currencyKey === no) {
-      return this.setState({ currencyKey: no });;
-    }
-    this.setState({ currencyKey: no });
-  };
-    const currencyDropdown = document.querySelector(".dropdown-text");
-    document.addEventListener("click", () => {
-      switch (currencyDropdown?.textContent?.charAt(0)) {
-        case "£":
-          this.setState({
-            currencyKey: 1,
-          });
-          break;
-        case "A":
-          this.setState({
-            currencyKey: 2,
-          });
-          break;
-        case "¥":
-          this.setState({
-            currencyKey: 3,
-          });
-          break;
-        case "₽":
-          this.setState({
-            currencyKey: 4,
-          });
-          break;
-        default:
-          this.setState({
-            currencyKey: 0,
-          });
-      }
+  handleText = (id) => {
+    this.setState({
+      currencyKey: id,
     });
   }
-
   render() {
     const { currencyKey } = this.state;
     return (
@@ -69,12 +35,9 @@ class App extends Component {
                 return <Loader />;
               } else {
                 const { categories } = data;
-                console.log(data.currencies)
-                const currency = data.currencies.map(({symbol}) => symbol )
-                console.log(currency, "Jaypee")
                 return (
                   <>
-                    <Navbar />
+                    <Navbar handleText={this.handleText} currencyKey={this.state.currencyKey} data={data} />
                     <Routes>
                       <Route path="/" element={<Navigate to="/all" />} />
                       {categories?.map(({ name }) => (

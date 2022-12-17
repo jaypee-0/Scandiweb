@@ -6,6 +6,9 @@ import { CartConsumer } from "../Context/CartContext";
 import Dropdown from "../Utils/Header/utils/Dropdown/Dropdown";
 import CartOverlay from "../Utils/Header/utils/Dropdown/CartOverlay/CartOverlay";
 import { Nav, CurrencyWrap, Img, Ul, Lia, Currencies, P, PokerContain } from "../../style/NavbarStyles";
+import logo from "../../assets/logo.png"
+import shopping from "../../assets/shopping-cart.png"
+
 
 class Navbar extends Component {
   constructor(props) {
@@ -57,59 +60,28 @@ class Navbar extends Component {
     } else {
       return data.currencies.map((currency) => {
         const currencyISO = {
-          $: "USD",
+          "$": "USD",
           "£": "GBP",
-          A$: "AUD",
+          "A$": "AUD",
           "¥": "JPY",
           "₽": "RUB",
         };
-        //console.log(currency)
         return currency.symbol + " " + currencyISO[currency.symbol];
       });
     }
   }
-  componentDidMount() {
-    const currencyDropdown = document.querySelector(".dropdown-text");
-    document.addEventListener("click", () => {
-      switch (currencyDropdown.textContent.charAt(0)) {
-        case "£":
-          this.setState({
-            currencyKey: 1,
-          });
-          break;
-        case "A":
-          this.setState({
-            currencyKey: 2,
-          });
-          break;
-        case "¥":
-          this.setState({
-            currencyKey: 3,
-          });
-          break;
-        case "₽":
-          this.setState({
-            currencyKey: 4,
-          });
-          break;
-        default:
-          this.setState({
-            currencyKey: 0,
-          });
-      }
-    });
-  }
   render() {
     this.closeNav();
+    const data = this.props.data;
     return (
       <Nav>
           <Ul>{this.displayCategories()}</Ul>
           <Link to="/all">
-            <Img src="./logo.png" alt="" />
+            <Img src={logo} alt="" />
           </Link>
         <CurrencyWrap>
           <Currencies>
-            <Dropdown currencyList={this.displayCurrencySymbols2()} />
+            <Dropdown data={data} handleText={this.props.handleText} currencyList={this.displayCurrencySymbols2()} currencyKey={this.props.currencyKey} />
           </Currencies>
           <div
             onClick={() => {
@@ -130,10 +102,10 @@ class Navbar extends Component {
               }}
             </CartConsumer>
             <div style={{marginLeft: 50}}>
-              <Img src="./assets/shopping-cart.png" width={24} height={20} />
+              <Img src={shopping} width={24} height={20} />
             </div>
           </div>
-          <CartOverlay close={this.closeNav} currency={this.state.currencyKey} />
+          <CartOverlay close={this.closeNav} currency={this.props.currencyKey} />
         </CurrencyWrap>
       </Nav>
     );

@@ -1,135 +1,69 @@
-import React, { Component } from 'react';
-import { CartConsumer } from '../../../../../Context/CartContext';
-import { Link } from 'react-router-dom';
-import './style/cartoverlay.scss';
-import { getOccurrence } from '../../../../util_functions';
+import React, { Component } from "react";
+import { CartConsumer } from "../../../../../Context/CartContext";
+import { Link } from "react-router-dom";
+import "./style/cartoverlay.scss";
+import { getOccurrence } from "../../../../util_functions";
 
 class CartOverlay extends Component {
   render() {
     return (
       <div>
-        <div className='cart-overlay'>
-          <div id='myCart' className='sidebar'>
-            <div className='cart-overlay-content'>
+        <div className="cart-overlay">
+          <div id="myCart" className="sidebar">
+            <div className="cart-overlay-content">
               <CartConsumer>
                 {(props) => {
                   const { cart, quantities } = props;
                   if (cart.length >= 1) {
                     return (
-                      <div className='bag-quantity'>
+                      <div className="bag-quantity">
                         <p>My bag,</p>
                         <p>
-                          {cart.length + quantities.length}{' '}
-                          {cart.length + quantities.length > 1
-                            ? 'items'
-                            : 'item'}
+                          {cart.length + quantities.length} {cart.length + quantities.length > 1 ? "items" : "item"}
                         </p>
                       </div>
                     );
                   } else {
-                    return (                      
+                    return (
                       <div>
-                        <p>Cart is empty.</p>                        
-                        <p style={{marginTop: -10, color: '#5ece7b'}}>Shop more</p>              
+                        <p>Cart is empty.</p>
+                        <p style={{ marginTop: -10, color: "#5ece7b" }}>Shop more</p>
                       </div>
-                  )
+                    );
                   }
                 }}
               </CartConsumer>
 
-              <div className='bag-content'>
+              <div className="bag-content">
                 <CartConsumer>
                   {(props) => {
-                    const {
-                      cart,
-                      quantities,
-                      addQuantity,
-                      removeQuantity,
-                      removeItem,
-                      emptyCart,
-                    } = props;
+                    const { cart, quantities, addQuantity, removeQuantity, removeItem, emptyCart } = props;
 
                     return cart.map((arr, index) => {
                       return arr[0].map((item) => {
                         return (
-                          <div className='cart-page-bag'>
-                            <div className='img-section-cart-page-bag'>
-                              <div className='cart-page-quantity-bag'>
+                          <div className="cart-page-bag">
+                            <div className="img-section-cart-page-bag">
+                              <div className="cart-page-quantity-bag">
                                 <div
                                   onClick={() => {
-                                    addQuantity(
-                                      arr[3].join('') +
-                                        getOccurrence(
-                                          quantities,
-                                          arr[3].join(''),
-                                          arr[3].join('')
-                                        )
-                                    );
+                                    addQuantity(arr[3].join("") + getOccurrence(quantities, arr[3].join(""), arr[3].join("")));
                                   }}
                                 >
-                                  <svg
-                                    width='24'
-                                    height='24'
-                                    viewBox='0 0 24 24'
-                                    fill='none'
-                                    xmlns='http://www.w3.org/2000/svg'
-                                  >
-                                    <path
-                                      d='M12 8V16'
-                                      stroke='#1D1F22'
-                                      stroke-linecap='round'
-                                      stroke-linejoin='round'
-                                    />
-                                    <path
-                                      d='M8 12H16'
-                                      stroke='#1D1F22'
-                                      stroke-linecap='round'
-                                      stroke-linejoin='round'
-                                    />
-                                    <rect
-                                      x='0.5'
-                                      y='0.5'
-                                      width='23'
-                                      height='23'
-                                      stroke='#1D1F22'
-                                    />
+                                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 8V16" stroke="#1D1F22" stroke-linecap="round" stroke-linejoin="round" />
+                                    <path d="M8 12H16" stroke="#1D1F22" stroke-linecap="round" stroke-linejoin="round" />
+                                    <rect x="0.5" y="0.5" width="23" height="23" stroke="#1D1F22" />
                                   </svg>
                                 </div>
                                 <div>
-                                  <p>
-                                    {getOccurrence(
-                                      quantities,
-                                      arr[3].join(''),
-                                      arr[3].join('')
-                                    )}
-                                  </p>
+                                  <p>{getOccurrence(quantities, arr[3].join(""), arr[3].join(""))}</p>
                                 </div>
                                 <div
                                   //removeItem(0);
                                   onClick={() => {
-                                    if (
-                                      getOccurrence(
-                                        quantities,
-                                        arr[3].join(''),
-                                        arr[3].join('')
-                                      ) >= 2
-                                    ) {
-                                      removeQuantity(
-                                        arr[3].join('') +
-                                          parseInt(
-                                            getOccurrence(
-                                              quantities,
-                                              arr[3].join(''),
-                                              arr[3].join('')
-                                            ) - 1
-                                          ),
-                                        quantities[
-                                          quantities.length - 1
-                                        ].charAt(
-                                          quantities[quantities.length - 1]
-                                            .length - 1
-                                        )
-                                      );
+                                    if (getOccurrence(quantities, arr[3].join(""), arr[3].join("")) >= 2) {
+                                      removeQuantity(arr[3].join("") + parseInt(getOccurrence(quantities, arr[3].join(""), arr[3].join("")) - 1), quantities[quantities.length - 1].charAt(quantities[quantities.length - 1].length - 1));
                                     } else {
                                       if (cart.length >= 2) {
                                         removeItem(index);
@@ -139,74 +73,44 @@ class CartOverlay extends Component {
                                     }
                                   }}
                                 >
-                                  <svg
-                                    width='24'
-                                    height='24'
-                                    viewBox='0 0 24 24'
-                                    fill='none'
-                                    xmlns='http://www.w3.org/2000/svg'
-                                  >
-                                    <path
-                                      d='M8 12H16'
-                                      stroke='#1D1F22'
-                                      stroke-linecap='round'
-                                      stroke-linejoin='round'
-                                    />
-                                    <rect
-                                      x='0.5'
-                                      y='0.5'
-                                      width='23'
-                                      height='23'
-                                      stroke='#1D1F22'
-                                    />
+                                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 12H16" stroke="#1D1F22" stroke-linecap="round" stroke-linejoin="round" />
+                                    <rect x="0.5" y="0.5" width="23" height="23" stroke="#1D1F22" />
                                   </svg>
                                 </div>
                               </div>
-                              <div className='bag-img'>
-                                <img
-                                  src={item.gallery[0]}
-                                  alt={item.name}
-                                ></img>
+                              <div className="bag-img">
+                                <img src={item.gallery[0]} alt={item.name}></img>
                               </div>
                             </div>
-                            <div className='details-section details-section-cart-page-bag'>
-                              <div className='cart-page-brand-and-name-bag'>
+                            <div className=" details-section-cart-page-bag">
+                              <div className="cart-page-brand-and-name-bag">
                                 <p>{item.brand}</p>
                                 <p>{item.name}</p>
                               </div>
 
-                              <div className='cart-page-price-bag'>
+                              <div className="cart-page-price-bag">
                                 <p>
-                                  {
-                                    item.prices[this.props.currency].currency
-                                      .symbol
-                                  }
+                                  {item.prices[this.props.currency].currency.symbol}
                                   {item.prices[this.props.currency].amount}
                                 </p>
                               </div>
 
                               {item.attributes.map((atr, index) => {
-                                if (atr.name !== 'Color') {
+                                if (atr.name !== "Color") {
                                   return (
-                                    <div className='attributes-section-product-page-bag'>
-                                      <p className='attribute-name-bag'>
-                                        {atr.name}:
-                                      </p>
-                                      <ul className='product-attributes-bag'>
+                                    <div className="attributes-section-product-page-bag">
+                                      <p className="attribute-name-bag">{atr.name}:</p>
+                                      <ul className="product-attributes-bag">
                                         {atr.items.map((atr2, index2) => {
                                           return (
                                             <li
                                               className={
                                                 arr[1][0].find((el) => {
                                                   return el.value === atr2.value;
-                                                }) &&
-                                                arr[1][0].find(
-                                                  (ind) =>
-                                                    ind.id ===
-                                                    `${index}${index2}`
-                                                )
-                                                  ? 'attribute-selected-bag'
-                                                  : ''
+                                                }) && arr[1][0].find((ind) => ind.id === `${index}${index2}`)
+                                                  ? "attribute-selected-bag"
+                                                  : ""
                                               }
                                               value={atr2.value}
                                               data-index={`${index}${index2}`}
@@ -220,30 +124,11 @@ class CartOverlay extends Component {
                                   );
                                 } else {
                                   return (
-                                    <div className='attributes-section attributes-section-product-page'>
-                                      <p className='attribute-name-bag'>
-                                        {atr.name}:
-                                      </p>
-                                      <ul className='product-color-bag'>
+                                    <div className="attributes-section attributes-section-product-page">
+                                      <p className="attribute-name-bag">{atr.name}:</p>
+                                      <ul className="product-color-bag">
                                         {atr.items.map((atr2, index2) => {
-                                          return (
-                                            <li
-                                              className={
-                                                arr[2][0].find(
-                                                  (el) => el.value === atr2.value
-                                                ) &&
-                                                arr[2][0].find(
-                                                  (ind) =>
-                                                    ind.id ===
-                                                    `${index}${index2}`
-                                                )
-                                                  ? 'color-selected-bag'
-                                                  : ''
-                                              }
-                                              value={atr2.value}
-                                              data-index={`${index}${index2}`}
-                                            ></li>
-                                          );
+                                          return <li className={arr[2][0].find((el) => el.value === atr2.value) && arr[2][0].find((ind) => ind.id === `${index}${index2}`) ? "color-selected-bag" : ""} value={atr2.value} data-index={`${index}${index2}`}></li>;
                                         })}
                                       </ul>
                                     </div>
@@ -259,7 +144,7 @@ class CartOverlay extends Component {
                 </CartConsumer>
               </div>
 
-              <div className='bag-checkout'>
+              <div className="bag-checkout">
                 <CartConsumer>
                   {(props) => {
                     const { cart, quantities, emptyCart } = props;
@@ -268,14 +153,7 @@ class CartOverlay extends Component {
 
                     cart.map((arr) => {
                       return arr[0].map((item) => {
-                        return s.push(
-                          item.prices[this.props.currency].amount *
-                            getOccurrence(
-                              quantities,
-                              arr[3].join(''),
-                              arr[3].join('')
-                            )
-                        );
+                        return s.push(item.prices[this.props.currency].amount * getOccurrence(quantities, arr[3].join(""), arr[3].join("")));
                       });
                     });
 
@@ -285,24 +163,19 @@ class CartOverlay extends Component {
                     if (cart.length + quantities.length >= 1) {
                       return (
                         <div>
-                          <div className='bag-price'>
+                          <div className="bag-price">
                             <p>Total</p>
                             <p>
-                              {
-                                cart[0][0][0].prices[this.props.currency]
-                                  .currency.symbol
-                              }
+                              {cart[0][0][0].prices[this.props.currency].currency.symbol}
                               {(parseFloat(total) + parseFloat(tax)).toFixed(2)}
                             </p>
                           </div>
-                          <div className='bag-checkout-buttons'>
-                            <Link to='/cart'>
+                          <div className="bag-checkout-buttons">
+                            <Link to="/cart">
                               <button
-                                className='view-bag-button'
+                                className="view-bag-button"
                                 onClick={() => {
-                                  document
-                                    .getElementById('myCart')
-                                    .classList.toggle('opaqueBg');
+                                  document.getElementById("myCart").classList.toggle("opaqueBg");
                                 }}
                               >
                                 view bag
@@ -310,17 +183,11 @@ class CartOverlay extends Component {
                             </Link>
 
                             <button
-                              className='checkout-button'
+                              className="checkout-button"
                               onClick={() => {
-                                if (
-                                  window.confirm(
-                                    "Pressing 'OK' will empty your bag."
-                                  )
-                                ) {
+                                if (window.confirm("Pressing 'OK' will empty your bag.")) {
                                   emptyCart();
-                                  document
-                                    .getElementById('myCart')
-                                    .classList.toggle('opaqueBg');
+                                  document.getElementById("myCart").classList.toggle("opaqueBg");
                                 }
                               }}
                             >
@@ -337,10 +204,10 @@ class CartOverlay extends Component {
           </div>
         </div>
 
-        <div className='cart-overlay'>
-          <div id='myCart' className='sidebar'>
-            <div className='cart-overlay-content'>
-              <p className='empty-bag'>Your bag is empty.</p>
+        <div className="cart-overlay">
+          <div id="myCart" className="sidebar">
+            <div className="cart-overlay-content">
+              <p className="empty-bag">Your bag is empty.</p>
             </div>
           </div>
         </div>

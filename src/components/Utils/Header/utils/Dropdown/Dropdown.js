@@ -8,6 +8,7 @@ export class Dropdown extends React.Component {
     this.state = {
       isOpen: false,
       haveText: '',
+      currencyKey: 0
     };
   }
   componentDidMount() {
@@ -27,9 +28,12 @@ export class Dropdown extends React.Component {
       aud.classList.remove('dropdown-text-aud');
     }
   }
-
+  
   render() {
+    const { currencyKey } = this.props
     const { isOpen, haveText } = this.state;
+    const data = this.props.data;
+    const currency = data.currencies.map(({symbol}) => symbol )
 
     return (
       <div
@@ -37,7 +41,8 @@ export class Dropdown extends React.Component {
         onClick={this.handleClick}
       >
         <div id='dd-text' data-iso={haveText} className='dropdown-text'>
-          {!haveText ? '$' : haveText}
+          {/* {!haveText ? '$' : haveText} */}
+          {currency[currencyKey]}
         </div>
         {this.itemList(this.props.currencyList)}
       </div>
@@ -50,16 +55,19 @@ export class Dropdown extends React.Component {
     });
   };
 
-  handleText = (e) => {
-    this.setState({
-      haveText: e.currentTarget.textContent.slice(0, 2),
-    });
-  };
+  // handleText = (id) => {
+  //   this.setState({
+  //     currencyKey: id,
+  //   });
+  //   console.log(id);
+  //   console.log(this.state.currencyKey);
+  //   console.log(this.props.currencyKey);
+  // };
 
   itemList = (props) => {
-    const list = props.map((item) => (
+    const list = props.map((item, index) => (
       <div
-        onClick={this.handleText}
+        onClick={()=>this.props.handleText(index)}
         className='dropdown-item'
         key={item.toString()}
       >

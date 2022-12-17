@@ -3,9 +3,10 @@
 
 .cart-overlay {
   position: relative;
-
+  text-align: left;
   font-family: 'Raleway', sans-serif;
   color: $main-text-color;
+  padding: 0 10px;
 }
 
 .sidebar {
@@ -75,6 +76,7 @@
   display: flex;
   column-gap: 12px;
   list-style: none;
+  padding-left: 0;
 }
 
 .product-attributes-bag li {
@@ -94,6 +96,7 @@
   display: flex;
   column-gap: 12px;
   list-style: none;
+  padding-left: 0;
 }
 
 .product-color-bag li {
@@ -113,7 +116,7 @@
   width: 125px;
   height: 100%;
 
-  object-fit: cover;
+  object-fit: contain;
 
   user-select: none;
 }
