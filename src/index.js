@@ -1,25 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
+import React from "react";
+import ReactDOM from "react-dom/client";
+import App from "./App";
+import { ApolloClient, InMemoryCache, ApolloProvider } from "@apollo/client";
 import { BrowserRouter } from "react-router-dom";
+import "./style/index.css";
 
-import './Styles/index.css';
-import App from './App';
+const client = new ApolloClient({
+  uri: "http://localhost:4000/",
+  cache: new InMemoryCache(),
+});
 
-if (localStorage.getItem('ScandiwebCart') === null) {
-  localStorage.setItem('ScandiwebCart', JSON.stringify([]))
-} else {
-
-}
-if (localStorage.getItem('currency') === null) {
-  localStorage.setItem('currency', JSON.stringify([]))
-} else {
-
-}
-const root = ReactDOM.createRoot(document.getElementById('root'));
+const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
-
   <BrowserRouter>
-    <App />
-  </BrowserRouter>
-
+    <ApolloProvider client={client}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </ApolloProvider>
+  </BrowserRouter>,
 );

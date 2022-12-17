@@ -1,105 +1,143 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom';
+import React, { Component } from "react";
+import { Link, NavLink } from "react-router-dom";
+import { graphql } from "@apollo/client/react/hoc";
+import { GET_CATEGORIES } from "../../queries/getQueries";
+import { CartConsumer } from "../Context/CartContext";
+import Dropdown from "../Utils/Header/utils/Dropdown/Dropdown";
+import CartOverlay from "../Utils/Header/utils/Dropdown/CartOverlay/CartOverlay";
+import { Nav, CurrencyWrap, Img, Ul, Lia, Currencies, P, PokerContain } from "../../style/NavbarStyles";
 
+class Navbar extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      currencyKey: 0,
+    };
+  }
 
-import shoppingLogo from '../../Assets/shopping-logo-cart-green.png'
-import shoppingCart from '../../Assets/interface/shopping-cart.png'
-import dropdown from '../../Assets/interface/dropdown.png'
-import {
-    Nav,
-    NavBarContainer,
-    Category,
-    List,
-    ListTwo,
-    Currenc,
-    Currency,
-    Div,
-    Img,
-    Option,
-    Select,
-    SelectContainer,
-    CartItems,
-    CartIcon,
-} from '../../Styles/NavbarStyles';
-
-export default class Navbar extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {}
-    }
-
-    componentDidMount() {
-        this.setState({ isActiveCurrency: 0 })
-    }
-
-    render() {
-        const { navItems, isActive, click, currencyItems, isActiveCurrency, activeCurrency, activeCurrencies, cart, toggleOverlay, currencyfunction, handleCurrency } = this.props
+  convertHexToSwatchOV() {
+    const productColor = document.querySelectorAll(".product-color-bag");
+    productColor.forEach((child) => {
+      const pcNodes = child.childNodes;
+      pcNodes.forEach((gChild) => {
+        gChild.style.backgroundColor = gChild.getAttribute("value");
+        if (gChild.getAttribute("value") === "#FFFFFF") {
+          gChild.classList.add("color-visibility");
+        }
+      });
+    });
+  }
+  openNav() {
+    document.getElementById("myCart").classList.toggle("show-cart");
+    this.convertHexToSwatchOV();
+  }
+  closeNav() {
+    window.addEventListener("click", (e) => {
+      e.target.className === "sidebar show-cart" && document.getElementById("myCart").classList.toggle("show-cart");
+    });
+  }
+  displayCategories() {
+    const data = this.props.data;
+    if (data.loading === false) {
+      return data.categories.map(({name}) => {
         return (
-            <Nav>
-                <NavBarContainer>
-                    <Category>
-                        {navItems.map((item, index) =>
-                            <div key={index}>
-                                {isActive === index ?
-                                    <Link to={`/${item.name.toLowerCase()} `}>
-                                        <ListTwo active onClick={() => click(index)}>{item.name}</ListTwo>
-                                    </Link> :
-                                    <Link to={`/${item.name.toLowerCase()} `}>
-                                        <List onClick={() => click(index)}>{item.name}</List>
-                                    </Link>
-                                }
-                            </div>
-                        )}
-                    </Category>
-
-                    <div>
-                        <Img src={shoppingLogo} width="31px" height="29px" />
-                    </div>
-
-                    <Div>
-                        <SelectContainer>
-                            {
-                                currencyItems.map((item, index) => (
-                                    <div key={index}>
-                                        <Currenc onClick={() => handleCurrency(index)}>
-                                            {isActiveCurrency === index &&
-                                                <Currency className='one' >{item.symbol}</Currency>}
-                                        </Currenc>
-                                    </div>
-
-                                ))}
-
-                            <div>
-
-                            <Select active={activeCurrency} onClick={currencyfunction}>
-                                {
-                                    currencyItems.map((item, index) => (
-                                        <div key={index} >
-                                            <Option onClick={() => activeCurrencies(index)}>{item.symbol} {item.label}</Option>
-                                        </div>
-                                    ))}
-                            </Select>
-
-                                            </div>
-
-                        </SelectContainer>
-                        
-                        
-                            
-                        <Img src={dropdown} width="9px" height='6px' marginLeft="-15px" marginRight="30px" active={activeCurrency} />
-                      
-
-                        <CartIcon onClick={toggleOverlay} >
-                            <Img src={shoppingCart} width='20px' height='20px' alt='shopping cart' />
-                            {
-                                cart.length > 0 &&
-                            <CartItems>{cart.length > 0 ? cart.length : 0}</CartItems>
-                            }
-                        </CartIcon>
-                    </Div>
-                </NavBarContainer>
-            </Nav>
-
-        )
+          <Lia key={name}>
+            <NavLink activeClassName="active" className="navlink" id={name} to={`/${name}`}>
+              {name}
+            </NavLink>
+          </Lia>
+        );
+      });
     }
+  }
+  displayCurrencySymbols2() {
+    const data = this.props.data;
+    if (data.loading) {
+      return ["Loading"];
+    } else {
+      return data.currencies.map((currency) => {
+        const currencyISO = {
+          $: "USD",
+          "£": "GBP",
+          A$: "AUD",
+          "¥": "JPY",
+          "₽": "RUB",
+        };
+        //console.log(currency)
+        return currency.symbol + " " + currencyISO[currency.symbol];
+      });
+    }
+  }
+  componentDidMount() {
+    const currencyDropdown = document.querySelector(".dropdown-text");
+    document.addEventListener("click", () => {
+      switch (currencyDropdown.textContent.charAt(0)) {
+        case "£":
+          this.setState({
+            currencyKey: 1,
+          });
+          break;
+        case "A":
+          this.setState({
+            currencyKey: 2,
+          });
+          break;
+        case "¥":
+          this.setState({
+            currencyKey: 3,
+          });
+          break;
+        case "₽":
+          this.setState({
+            currencyKey: 4,
+          });
+          break;
+        default:
+          this.setState({
+            currencyKey: 0,
+          });
+      }
+    });
+  }
+  render() {
+    this.closeNav();
+    return (
+      <Nav>
+          <Ul>{this.displayCategories()}</Ul>
+          <Link to="/all">
+            <Img src="./logo.png" alt="" />
+          </Link>
+        <CurrencyWrap>
+          <Currencies>
+            <Dropdown currencyList={this.displayCurrencySymbols2()} />
+          </Currencies>
+          <div
+            onClick={() => {
+              this.openNav();
+            }}
+            className="cart-vector"
+          >
+            <CartConsumer>
+              {(props) => {
+                const { cart, quantities } = props;
+                if (cart.length >= 1) {
+                  return (
+                    <PokerContain>
+                      <P>{cart.length + quantities.length}</P>;
+                    </PokerContain>
+                  );
+                }
+              }}
+            </CartConsumer>
+            <div style={{marginLeft: 50}}>
+              <Img src="./assets/shopping-cart.png" width={24} height={20} />
+            </div>
+          </div>
+          <CartOverlay close={this.closeNav} currency={this.state.currencyKey} />
+        </CurrencyWrap>
+      </Nav>
+    );
+  }
 }
+
+export default graphql(GET_CATEGORIES)(Navbar);

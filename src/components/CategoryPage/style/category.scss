@@ -1,0 +1,44 @@
+@import '../../../style/colors';
+@import '../../../style/fonts';
+
+.category-page {
+  padding: 0px 101px 0px 117px;
+  @media (max-width: 1024px) {
+    padding: 0px 10px 15px;
+  }
+  font-family: 'Raleway', sans-serif;
+  font-style: normal;
+  color: $main-text-color;
+}
+.cart-info {  
+  display: flex;
+  justify-content: space-between;
+  column-gap: 100px;
+  font-family: 'Raleway', sans-serif;
+  color: $main-text-color;
+  text-align: left;
+}
+.category-page h2 {
+  margin: 70px 0px 70px 0px;
+  text-transform: capitalize;
+  font-size: 42px;
+  text-align: left;
+  font-weight: 500;
+}
+
+.product-cards-section {
+  display: flex;
+  flex-wrap: wrap;
+  padding-right: 0px;
+
+  column-gap: 30px;
+  row-gap: 60px;
+}
+
+.spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 00px;
+  transform: translate(-50%, -50%);
+}

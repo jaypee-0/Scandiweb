@@ -1,0 +1,85 @@
+@import "../../../../../style/colors";
+@import "../../../../../style/fonts";
+
+.product-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #fff;
+  width: 386px;
+  max-height: auto;
+  transition: box-shadow 0.3s ease-in-out;
+  position: relative;
+}
+.product-card:hover {
+  box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.201);
+}
+.product-cards-section a {
+  text-decoration: none;
+  color: $main-text-color;
+}
+.open-pdp-btn {
+  position: absolute;
+  bottom: 10%;
+  right: 10%;
+  cursor: pointer;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0.3s, opacity 0.4s ease-in-out;
+}
+.show {
+  visibility: visible;
+  opacity: 1;
+}
+.hide {
+  visibility: hidden;
+}
+.nostock {
+  opacity: 0.5;
+}
+.nostock::before {
+  content: "OUT OF STOCK";
+  position: absolute;
+  font-size: 24px;
+  font-weight: map-get($font-weights, regular);
+}
+.product-card img {
+  width: 95%;
+  margin: auto;
+  height: auto;
+  object-fit: cover;
+  @media (max-width: 1024px) {
+    width: 100%;
+    height: 330px;
+  }
+}
+
+.img-text {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 25px;
+  width: 90%;
+  margin: auto;
+}
+
+.title-price {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  row-gap: 5px;
+}
+
+.title-price h4,
+.title-price p {
+  font-size: 18px;
+}
+
+.title-price h4 {
+  font-weight: map-get($font-weights, light);
+}
+
+.title-price p {
+  font-weight: map-get($font-weights, medium);
+}
